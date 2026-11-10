@@ -1,8 +1,11 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
+import { useSearchParams } from 'next/navigation'
+import { useLocale, useTranslations } from 'next-intl'
 import styled from 'styled-components'
-import { Link } from '@/i18n/navigation'
+import { Link, usePathname } from '@/i18n/navigation'
+import { SearchBox } from '@/shared/SearchBox'
+import { Locale } from '@/types/enums/locale'
 import { categoryMessageKey } from '@/utils/categoryKey'
 
 type MobileMenuProps = {
@@ -13,6 +16,12 @@ type MobileMenuProps = {
 
 export function MobileMenu({ categories, onClose, onPickCategory }: MobileMenuProps) {
   const t = useTranslations()
+  const locale = useLocale()
+  const pathname = usePathname()
+  const params = useSearchParams()
+  const otherLocale = locale === Locale.Fa ? Locale.En : Locale.Fa
+  const query = params.toString()
+  const languageHref = query ? `${pathname}?${query}` : pathname
 
   return (
     <Overlay onClick={onClose}>
@@ -20,6 +29,7 @@ export function MobileMenu({ categories, onClose, onPickCategory }: MobileMenuPr
         <Close type="button" onClick={onClose}>
           {t('header.closeMenu')}
         </Close>
+        <SearchBox placement="menu" />
         <Link href="/" onClick={onClose}>
           {t('nav.home')}
         </Link>
@@ -39,6 +49,9 @@ export function MobileMenu({ categories, onClose, onPickCategory }: MobileMenuPr
         })}
         <Link href="/cart" onClick={onClose}>
           {t('header.cart')}
+        </Link>
+        <Link href={languageHref} locale={otherLocale} onClick={onClose}>
+          {locale === Locale.Fa ? t('header.enName') : t('header.faName')}
         </Link>
       </Panel>
     </Overlay>
@@ -64,8 +77,8 @@ const Panel = styled.div`
   align-content: start;
   gap: 8px;
 
-  a,
-  button {
+  > a,
+  > button {
     text-align: start;
     background: transparent;
     border: 0;

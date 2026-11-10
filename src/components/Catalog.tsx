@@ -3,6 +3,7 @@
 import { useEffect, useMemo } from 'react'
 import { useTranslations } from 'next-intl'
 import styled from 'styled-components'
+import { ThemeMode } from '@/types/enums/theme'
 import { SortKey } from '@/types/enums/sort'
 import type { Product } from '@/types/product'
 import { filterProducts, PAGE_SIZE } from '@/utils/catalog'
@@ -11,6 +12,7 @@ import { CategoryList } from './CategoryList'
 import { Hero } from './Hero'
 import { Newsletter } from './Newsletter'
 import { ProductCard } from './ProductCard'
+import { SortMenu } from './SortMenu'
 
 export function Catalog({
   products,
@@ -35,24 +37,27 @@ export function Catalog({
 
   return (
     <>
-      <Hero images={products.map((product) => product.image)} />
+      <Hero products={products} />
       <CategoryList categories={categories} selected={category} onSelect={(value) => update({ category: value })} />
       <Section id="products">
         <Toolbar>
-          <h2>{t('title')}</h2>
-          <label>
-            {t('sortLabel')}
-            <select
-              aria-label={t('sortLabel')}
+          <Heading>
+            {t('title')}
+            <Mark aria-hidden="true" />
+          </Heading>
+          <SortSlot>
+            <SortMenu
+              label={t('sortLabel')}
               value={sort}
-              onChange={(event) => update({ sort: event.target.value === SortKey.Popular ? null : event.target.value })}
-            >
-              <option value={SortKey.Popular}>{t('popular')}</option>
-              <option value={SortKey.PriceAsc}>{t('priceAsc')}</option>
-              <option value={SortKey.PriceDesc}>{t('priceDesc')}</option>
-              <option value={SortKey.TitleAsc}>{t('titleAsc')}</option>
-            </select>
-          </label>
+              options={[
+                { value: SortKey.Popular, label: t('popular') },
+                { value: SortKey.PriceAsc, label: t('priceAsc') },
+                { value: SortKey.PriceDesc, label: t('priceDesc') },
+                { value: SortKey.TitleAsc, label: t('titleAsc') },
+              ]}
+              onChange={(next) => update({ sort: next === SortKey.Popular ? null : next })}
+            />
+          </SortSlot>
         </Toolbar>
         {failed ? <Note>{t('error')}</Note> : null}
         {!failed && filtered.length === 0 ? <Note>{t('empty')}</Note> : null}
@@ -63,14 +68,15 @@ export function Catalog({
         </Grid>
         {filtered.length > PAGE_SIZE ? (
           <Pager>
-            <button type="button" disabled={safePage === 1} onClick={() => update({ page: String(safePage - 1) }, false)}>
-              {t('prev')}
+            <button type="button" aria-label={t('prev')} disabled={safePage === 1} onClick={() => update({ page: String(safePage - 1) }, false)}>
+              <Chevron direction="left" />
             </button>
             {Array.from({ length: pageCount }, (_, index) => index + 1).map((number) => (
               <button
                 key={number}
                 type="button"
                 data-active={number === safePage}
+                aria-current={number === safePage ? 'page' : undefined}
                 onClick={() => update({ page: number === 1 ? null : String(number) }, false)}
               >
                 {number}
@@ -78,10 +84,11 @@ export function Catalog({
             ))}
             <button
               type="button"
+              aria-label={t('next')}
               disabled={safePage === pageCount}
               onClick={() => update({ page: String(safePage + 1) }, false)}
             >
-              {t('next')}
+              <Chevron direction="right" />
             </button>
           </Pager>
         ) : null}
@@ -93,6 +100,33 @@ export function Catalog({
 
 const Section = styled.section`
   margin-top: 18px;
+  scroll-margin-top: 84px;
+`
+
+const Heading = styled.h2`
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.4;
+
+  @media (max-width: 767px) {
+    font-size: 22px;
+  }
+`
+
+const Mark = styled.span`
+  display: block;
+  width: 46px;
+  height: 3px;
+  margin-top: 6px;
+  border-radius: 99px;
+  background: ${({ theme }) => theme.accent};
+`
+
+const SortSlot = styled.div`
+  @media (max-width: 767px) {
+    display: none;
+  }
 `
 
 const Toolbar = styled.div`
@@ -102,36 +136,14 @@ const Toolbar = styled.div`
   gap: 12px;
   flex-wrap: wrap;
   margin-bottom: 14px;
-
-  h2 {
-    margin: 0;
-    font-size: 26px;
-  }
-
-  label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: ${({ theme }) => theme.muted};
-    font-size: 14px;
-  }
-
-  select {
-    height: 42px;
-    border-radius: 12px;
-    border: 1px solid ${({ theme }) => theme.border};
-    background: ${({ theme }) => theme.surface};
-    color: ${({ theme }) => theme.text};
-    padding: 0 10px;
-  }
 `
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 16px;
 
-  @media (max-width: 1023px) {
+  @media (max-width: 1100px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -146,32 +158,56 @@ const Note = styled.p`
   color: ${({ theme }) => theme.muted};
 `
 
+function Chevron({ direction }: { direction: 'left' | 'right' }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d={direction === 'left' ? 'M14.5 6 8.5 12l6 6' : 'M9.5 6l6 6-6 6'}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
 const Pager = styled.nav`
+  direction: ltr;
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 22px;
+  gap: 6px;
+  margin-top: 28px;
 
   button {
-    min-width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    border: 1px solid ${({ theme }) => theme.border};
-    background: ${({ theme }) => theme.surface};
-    color: ${({ theme }) => theme.text};
+    min-width: 34px;
+    height: 34px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: ${({ theme }) => theme.muted};
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8px;
+    font-size: 14px;
+    font-weight: 700;
     cursor: pointer;
-    padding: 0 10px;
   }
 
   button[data-active='true'] {
-    background: ${({ theme }) => theme.accent};
-    color: ${({ theme }) => theme.onAccent};
-    border-color: ${({ theme }) => theme.accent};
+    width: 34px;
+    min-width: 34px;
+    border-radius: 50%;
+    background: ${({ theme }) => (theme.mode === ThemeMode.Light ? '#101C33' : theme.headerText)};
+    color: ${({ theme }) => (theme.mode === ThemeMode.Light ? '#FFFFFF' : theme.header)};
   }
 
   button:disabled {
-    opacity: 0.45;
+    opacity: 0.35;
     cursor: not-allowed;
   }
 `

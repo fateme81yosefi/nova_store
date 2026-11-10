@@ -9,26 +9,32 @@
     "home": "Home",
     "products": "Products",
     "categories": "Categories",
-    "allCategories": "All categories"
+    "allCategories": "All categories",
+    "all": "All"
   },
   "header": {
     "search": "Search products...",
     "cart": "Cart",
+    "carts": "Cart",
+    "faName": "فارسی",
+    "enName": "English",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "themeToDark": "Dark theme",
     "themeToLight": "Light theme",
     "language": "Language",
-    "faShort": "فا",
+    "faShort": "FA",
     "enShort": "EN"
   },
   "hero": {
-    "title": "A smarter pick, an easier checkout",
-    "text": "With NOVA, shopping feels a little more straightforward.",
-    "cta": "Browse products"
+    "title": "NOVA online store",
+    "text": "A different kind of shopping, with confidence.",
+    "cta": "Browse products",
+    "slides": "Store slides",
+    "dot": "Slide {number}"
   },
   "catalog": {
-    "title": "Featured products",
+    "title": "Best sellers",
     "sortLabel": "Sort by",
     "popular": "Top rated",
     "priceAsc": "Price: low to high",
@@ -42,10 +48,11 @@
     "next": "Next"
   },
   "categories": {
-    "electronics": "Electronics",
+    "electronics": "Digital",
     "jewelery": "Jewelry",
     "mens": "Men's clothing",
-    "womens": "Women's clothing"
+    "womens": "Women's clothing",
+    "clothing": "Clothing"
   },
   "currency": {
     "toman": "Toman"
@@ -63,7 +70,7 @@
     "guide": "Shopping guide",
     "shipping": "Shipping",
     "returns": "Returns",
-    "privacy": "Privacy",
+    "payment": "Secure payment",
     "faq": "FAQ",
     "links": "Useful links",
     "about": "About",
@@ -80,8 +87,8 @@
     "empty": "Your cart is empty.",
     "browse": "Browse products",
     "remove": "Remove",
-    "clear": "Clear cart",
-    "unit": "Unit price",
+    "clear": "Empty cart",
+    "unit": "Unit price:",
     "line": "Line total",
     "qty": "Quantity",
     "summary": "Order summary",

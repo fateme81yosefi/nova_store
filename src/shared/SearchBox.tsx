@@ -1,13 +1,15 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import styled from 'styled-components'
+import { SearchIcon } from '@/assets/Icons/glyphs'
 import { usePathname, useRouter } from '@/i18n/navigation'
 import { useProductQuery } from './useProductQuery'
 
-export function SearchBox() {
+export function SearchBox({ placement = 'header' }: { placement?: 'header' | 'menu' }) {
   const t = useTranslations('header')
+  const locale = useLocale()
   const pathname = usePathname()
   const router = useRouter()
   const { q, update } = useProductQuery()
@@ -34,12 +36,17 @@ export function SearchBox() {
 
   return (
     <Form
+      data-placement={placement}
       onSubmit={(event) => {
         event.preventDefault()
         applySearch(value)
       }}
     >
+      <button type="submit" aria-label={t('search')}>
+        <SearchIcon size={18} />
+      </button>
       <input
+        dir={locale === 'fa' ? 'rtl' : 'ltr'}
         value={value}
         placeholder={t('search')}
         aria-label={t('search')}
@@ -50,21 +57,59 @@ export function SearchBox() {
 }
 
 const Form = styled.form`
-  flex: 1 1 220px;
+  direction: ltr;
+  flex: 0 1 320px;
+  width: 320px;
+  max-width: 320px;
   min-width: 0;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: ${({ theme }) => (theme.mode === 'light' ? '#F1F4F8' : theme.soft)};
+  border: 0;
 
   input {
-    width: 100%;
-    height: 42px;
+    flex: 1;
+    min-width: 0;
+    height: 100%;
     border: 0;
-    border-radius: 999px;
-    padding: 0 16px;
-    background: #fff;
-    color: #142033;
+    background: transparent;
+    color: ${({ theme }) => theme.text};
+    font-size: 14px;
+    outline: none;
   }
 
-  @media (max-width: 767px) {
-    flex-basis: 100%;
-    order: 5;
+  input::placeholder {
+    color: ${({ theme }) => theme.muted};
+  }
+
+  button {
+    flex: none;
+    width: auto;
+    height: auto;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    display: grid;
+    place-items: center;
+    background: transparent;
+    color: ${({ theme }) => theme.text};
+    cursor: pointer;
+  }
+
+  &[data-placement='menu'] {
+    flex: none;
+    width: 100%;
+    max-width: none;
+    margin: 0 0 8px;
+  }
+
+  @media (max-width: 980px) {
+    &[data-placement='header'] {
+      display: none;
+    }
   }
 `

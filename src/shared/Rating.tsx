@@ -22,10 +22,12 @@ export function Rating({ rate, count }: { rate?: number; count?: number }) {
 const Row = styled.p`
   display: flex;
   align-items: center;
-  gap: 6px;
-  margin: 8px 0;
-  color: ${({ theme }) => theme.muted};
-  font-size: 13px;
+  justify-content: flex-start;
+  gap: 4px;
+  margin: 0 0 10px;
+  color: ${({ theme }) => theme.text};
+  font-size: 14px;
+  font-weight: 700;
 `
 
 const Star = styled.span`

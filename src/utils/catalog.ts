@@ -1,7 +1,8 @@
 import { SortKey } from '@/types/enums/sort'
 import type { Product } from '@/types/product'
+import { categoryMatches } from '@/utils/categoryKey'
 
-export const PAGE_SIZE = 6
+export const PAGE_SIZE = 8
 
 type Query = {
   q: string
@@ -13,7 +14,7 @@ export function filterProducts(products: Product[], query: Query) {
   const needle = query.q.trim().toLowerCase()
 
   const filtered = products.filter((product) => {
-    const matchesCategory = !query.category || product.category === query.category
+    const matchesCategory = categoryMatches(product.category, query.category)
     const matchesQuery =
       !needle ||
       product.title.toLowerCase().includes(needle) ||

@@ -8,6 +8,10 @@ body {
 }
 
 .header-fallback {
-  height: 72px;
-  background: #101c33;
+  height: 78px;
+  background: #fff;
+}
+
+html[data-theme='dark'] .header-fallback {
+  background: #162033;
 }

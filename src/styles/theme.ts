@@ -2,18 +2,18 @@ import { ThemeMode } from '@/types/enums/theme'
 
 export const lightTheme = {
   mode: ThemeMode.Light,
-  bg: '#F6F3EE',
+  bg: '#F4F7FB',
   surface: '#FFFFFF',
-  text: '#142033',
-  muted: '#66758A',
-  border: '#E6DFD4',
-  accent: '#F26A1B',
-  accentHover: '#DB560E',
+  text: '#1A2744',
+  muted: '#8A94A6',
+  border: '#E6EBF3',
+  accent: '#FF7A1A',
+  accentHover: '#F0680C',
   onAccent: '#FFFFFF',
   header: '#101C33',
   headerText: '#F7F8FB',
-  soft: '#F3EEE7',
-  shadow: '0 10px 30px rgba(16, 28, 51, 0.06)',
+  soft: '#F3F6FB',
+  shadow: '0 10px 30px rgba(26, 39, 68, 0.06)',
 }
 
 export type AppTheme = typeof lightTheme
