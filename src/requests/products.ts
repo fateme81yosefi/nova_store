@@ -1,0 +1,30 @@
+import { cache } from 'react'
+import { api } from '@/api/client'
+import type { Product } from '@/types/product'
+
+export const getProducts = cache(async function getProducts() {
+  const { data } = await api.get<Product[]>('/products')
+  if (!Array.isArray(data)) throw new Error('Unexpected products response')
+  return data
+})
+
+export const getCategories = cache(async function getCategories() {
+  const { data } = await api.get<string[]>('/products/categories')
+  if (!Array.isArray(data)) throw new Error('Unexpected categories response')
+  return data
+})
+
+export async function loadStorefront() {
+  try {
+    const products = await getProducts()
+    let categories: string[] = []
+    try {
+      categories = await getCategories()
+    } catch {
+      categories = [...new Set(products.map((item) => item.category))]
+    }
+    return { products, categories, failed: false }
+  } catch {
+    return { products: [] as Product[], categories: [] as string[], failed: true }
+  }
+}

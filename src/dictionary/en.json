@@ -1,0 +1,101 @@
+{
+  "meta": {
+    "homeTitle": "NOVA | Store",
+    "homeDescription": "Browse products, sort by category or price, and add them to your cart.",
+    "cartTitle": "Cart | NOVA",
+    "cartDescription": "Products you set aside to buy."
+  },
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "categories": "Categories",
+    "allCategories": "All categories"
+  },
+  "header": {
+    "search": "Search products...",
+    "cart": "Cart",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "themeToDark": "Dark theme",
+    "themeToLight": "Light theme",
+    "language": "Language",
+    "faShort": "فا",
+    "enShort": "EN"
+  },
+  "hero": {
+    "title": "A smarter pick, an easier checkout",
+    "text": "With NOVA, shopping feels a little more straightforward.",
+    "cta": "Browse products"
+  },
+  "catalog": {
+    "title": "Featured products",
+    "sortLabel": "Sort by",
+    "popular": "Top rated",
+    "priceAsc": "Price: low to high",
+    "priceDesc": "Price: high to low",
+    "titleAsc": "Title",
+    "add": "Add to cart",
+    "added": "Added",
+    "empty": "No products match this search.",
+    "error": "Could not load products. Check the connection and refresh.",
+    "prev": "Previous",
+    "next": "Next"
+  },
+  "categories": {
+    "electronics": "Electronics",
+    "jewelery": "Jewelry",
+    "mens": "Men's clothing",
+    "womens": "Women's clothing"
+  },
+  "currency": {
+    "toman": "Toman"
+  },
+  "newsletter": {
+    "title": "Stay in touch",
+    "text": "Join the newsletter for the latest offers.",
+    "placeholder": "Your email address...",
+    "submit": "Join",
+    "success": "Saved. This form does not actually send email.",
+    "invalid": "Enter a valid email."
+  },
+  "footer": {
+    "tagline": "A shop for everyday things",
+    "guide": "Shopping guide",
+    "shipping": "Shipping",
+    "returns": "Returns",
+    "privacy": "Privacy",
+    "faq": "FAQ",
+    "links": "Useful links",
+    "about": "About",
+    "contact": "Contact",
+    "rights": "All rights reserved.",
+    "social": "Social",
+    "telegram": "Telegram",
+    "instagram": "Instagram",
+    "linkedin": "LinkedIn",
+    "x": "X"
+  },
+  "cart": {
+    "title": "Cart",
+    "empty": "Your cart is empty.",
+    "browse": "Browse products",
+    "remove": "Remove",
+    "clear": "Clear cart",
+    "unit": "Unit price",
+    "line": "Line total",
+    "qty": "Quantity",
+    "summary": "Order summary",
+    "total": "Total",
+    "items": "Items",
+    "checkout": "Checkout",
+    "checkoutNote": "Payment and placing an order are out of scope.",
+    "increase": "Increase quantity",
+    "decrease": "Decrease quantity"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong.",
+    "retry": "Try again",
+    "notFound": "I could not find that page."
+  }
+}

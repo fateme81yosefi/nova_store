@@ -1,0 +1,13 @@
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+.header-fallback {
+  height: 72px;
+  background: #101c33;
+}

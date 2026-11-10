@@ -1,0 +1,29 @@
+{
+  "name": "nova-store",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@fontsource/vazirmatn": "^5.2.8",
+    "axios": "^1.13.2",
+    "formik": "^2.4.6",
+    "next": "^16.0.1",
+    "next-intl": "^4.5.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "styled-components": "^6.1.19",
+    "yup": "^1.7.1",
+    "zustand": "^5.0.8"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "typescript": "^5.9.3"
+  }
+}
