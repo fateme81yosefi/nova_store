@@ -4,7 +4,7 @@ import { Catalog } from '@/components/Catalog'
 import { loadStorefront } from '@/requests/products'
 import { Container, PageMain } from '@/shared/layout'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 60
 
 type Props = {
   params: Promise<{ locale: string }>

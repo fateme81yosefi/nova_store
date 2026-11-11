@@ -1,6 +1,8 @@
-import { getTranslations } from 'next-intl/server'
+'use client'
 
-export default async function Loading() {
-  const t = await getTranslations('common')
+import { useTranslations } from 'next-intl'
+
+export default function Loading() {
+  const t = useTranslations('common')
   return <p style={{ textAlign: 'center', padding: 48 }}>{t('loading')}</p>
 }
