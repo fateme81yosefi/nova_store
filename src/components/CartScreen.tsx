@@ -48,7 +48,7 @@ export function CartScreen() {
                     <Remove type="button" aria-label={t('remove')} onClick={() => remove(item.id)} />
                   </Thumb>
                   <Info>
-                    <strong>{item.title}</strong>
+                    <Link href={`/products/${item.id}`}>{item.title}</Link>
                     <span>
                       {t('unit')} <Money usd={item.price} />
                     </span>
@@ -202,9 +202,15 @@ const Info = styled.div`
   gap: 6px;
   min-width: 0;
 
-  strong {
+  a {
+    color: inherit;
     font-weight: 800;
     line-height: 1.7;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: ${({ theme }) => theme.accent};
   }
 
   span {

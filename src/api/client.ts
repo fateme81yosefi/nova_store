@@ -19,8 +19,10 @@ api.interceptors.response.use(
   (error: unknown) => {
     if (axios.isAxiosError(error)) {
       const data = error.response?.data
-      if (typeof data === 'string' && data.trim()) return Promise.reject(new Error(data))
-      return Promise.reject(new Error(error.message))
+      const message = typeof data === 'string' && data.trim() ? data : error.message
+      const failure = new Error(message) as Error & { status?: number }
+      failure.status = error.response?.status
+      return Promise.reject(failure)
     }
     return Promise.reject(error)
   },

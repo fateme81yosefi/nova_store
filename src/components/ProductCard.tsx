@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import styled from 'styled-components'
 import { CartIcon } from '@/assets/Icons/glyphs'
+import { Link } from '@/i18n/navigation'
 import { useCart } from '@/storage/cartStore'
 import { ThemeMode } from '@/types/enums/theme'
 import type { Product } from '@/types/product'
@@ -26,12 +27,14 @@ export function ProductCard({ product }: { product: Product }) {
 
   return (
     <Card>
-      <ImageWrap>
+      <ImageLink href={`/products/${product.id}`}>
         <img src={product.image} alt={product.title} />
-      </ImageWrap>
+      </ImageLink>
       <Body>
         <Category>{categoryLabel}</Category>
-        <h3>{product.title}</h3>
+        <h3>
+          <TitleLink href={`/products/${product.id}`}>{product.title}</TitleLink>
+        </h3>
         <Rating rate={product.rating?.rate} count={product.rating?.count} />
         <Price>
           <Money usd={product.price} />
@@ -67,7 +70,7 @@ const Card = styled.article`
   box-shadow: ${({ theme }) => theme.shadow};
 `
 
-const ImageWrap = styled.div`
+const ImageLink = styled(Link)`
   background: ${({ theme }) => (theme.mode === ThemeMode.Light ? '#F4F5F7' : theme.soft)};
   height: 248px;
   display: flex;
@@ -75,6 +78,7 @@ const ImageWrap = styled.div`
   justify-content: center;
   padding: 28px 28px 40px;
   overflow: hidden;
+  text-decoration: none;
 
   img {
     display: block;
@@ -99,14 +103,23 @@ const Body = styled.div`
 
   h3 {
     margin: 0 0 8px;
+    min-height: 54px;
     font-size: 16px;
     font-weight: 800;
     line-height: 1.7;
-    min-height: 54px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+  }
+`
+
+const TitleLink = styled(Link)`
+  color: inherit;
+  text-decoration: none;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  &:hover {
+    color: ${({ theme }) => theme.accent};
   }
 `
 

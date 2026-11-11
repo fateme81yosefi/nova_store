@@ -82,6 +82,10 @@
     "linkedin": "LinkedIn",
     "x": "X"
   },
+  "product": {
+    "back": "Back to products",
+    "description": "Description"
+  },
   "cart": {
     "title": "Cart",
     "empty": "Your cart is empty.",

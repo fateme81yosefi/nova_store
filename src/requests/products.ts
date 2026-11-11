@@ -14,6 +14,19 @@ export const getCategories = cache(async function getCategories() {
   return data
 })
 
+export const getProduct = cache(async function getProduct(id: string) {
+  if (!/^\d+$/.test(id)) return null
+  try {
+    const { data } = await api.get<Product | ''>(`/products/${id}`)
+    if (!data || typeof data !== 'object' || typeof data.id !== 'number' || !data.title) return null
+    return data
+  } catch (error) {
+    const status = typeof error === 'object' && error && 'status' in error ? error.status : undefined
+    if (status === 404) return null
+    throw error
+  }
+})
+
 export async function loadStorefront() {
   try {
     const products = await getProducts()
