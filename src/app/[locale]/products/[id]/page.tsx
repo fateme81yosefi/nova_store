@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { ProductDetail } from '@/components/ProductDetail'
+import { localeAlternates } from '@/i18n/alternates'
 import { getProduct, getProducts } from '@/requests/products'
 import { Container, PageMain } from '@/shared/layout'
 
@@ -52,13 +53,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: 'NOVA',
       type: 'website',
     },
-    alternates: {
-      canonical: `/${locale}${path}`,
-      languages: {
-        fa: `/fa${path}`,
-        en: `/en${path}`,
-      },
-    },
+    alternates: localeAlternates(locale, path),
   }
 }
 

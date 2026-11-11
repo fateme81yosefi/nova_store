@@ -4,6 +4,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server'
 import { Suspense, type ReactNode } from 'react'
 import { AppThemeProvider } from '@/context/ThemeProvider'
+import { localeAlternates } from '@/i18n/alternates'
 import { routing, type AppLocale } from '@/i18n/routing'
 import { getCategories } from '@/requests/products'
 import { Footer } from '@/shared/Footer'
@@ -37,12 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: 'NOVA',
       type: 'website',
     },
-    alternates: {
-      languages: {
-        fa: '/fa',
-        en: '/en',
-      },
-    },
+    alternates: localeAlternates(locale),
     icons: { icon: '/favicon.svg' },
   }
 }

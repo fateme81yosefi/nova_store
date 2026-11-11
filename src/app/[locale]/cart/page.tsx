@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { CartScreen } from '@/components/CartScreen'
+import { localeAlternates } from '@/i18n/alternates'
 import { Container, PageMain } from '@/shared/layout'
 
 type Props = {
@@ -15,6 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: t('cartTitle'),
     description: t('cartDescription'),
     robots: { index: false, follow: false },
+    alternates: localeAlternates(locale, '/cart'),
   }
 }
 
