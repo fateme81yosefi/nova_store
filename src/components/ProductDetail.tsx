@@ -8,6 +8,8 @@ import { Link } from '@/i18n/navigation'
 import { Money } from '@/shared/Money'
 import { RateNote } from '@/shared/RateNote'
 import { Rating } from '@/shared/Rating'
+import { SafeImage } from '@/shared/SafeImage'
+import { safeImageUrl } from '@/security/url'
 import { useCart } from '@/storage/cartStore'
 import { ThemeMode } from '@/types/enums/theme'
 import type { Product } from '@/types/product'
@@ -34,7 +36,7 @@ export function ProductDetail({ product }: { product: Product }) {
       </Crumb>
       <Panel>
         <ImageWrap>
-          <img src={product.image} alt={product.title} />
+          <SafeImage src={product.image} alt={product.title} />
         </ImageWrap>
         <Copy>
           <Category href={`/?category=${encodeURIComponent(product.category)}`}>{categoryLabel}</Category>
@@ -54,7 +56,7 @@ export function ProductDetail({ product }: { product: Product }) {
                   id: product.id,
                   title: product.title,
                   price: product.price,
-                  image: product.image,
+                  image: safeImageUrl(product.image) ?? '',
                   category: product.category,
                 })
                 setAdded(true)

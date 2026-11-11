@@ -11,6 +11,8 @@ import type { Product } from '@/types/product'
 import { categoryMessageKey } from '@/utils/categoryKey'
 import { Money } from '@/shared/Money'
 import { Rating } from '@/shared/Rating'
+import { SafeImage } from '@/shared/SafeImage'
+import { safeImageUrl } from '@/security/url'
 
 export function ProductCard({ product }: { product: Product }) {
   const t = useTranslations()
@@ -28,7 +30,7 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <Card>
       <ImageLink href={`/products/${product.id}`}>
-        <img src={product.image} alt={product.title} />
+        <SafeImage src={product.image} alt={product.title} />
       </ImageLink>
       <Body>
         <Category>{categoryLabel}</Category>
@@ -46,7 +48,7 @@ export function ProductCard({ product }: { product: Product }) {
               id: product.id,
               title: product.title,
               price: product.price,
-              image: product.image,
+              image: safeImageUrl(product.image) ?? '',
               category: product.category,
             })
             setAdded(true)

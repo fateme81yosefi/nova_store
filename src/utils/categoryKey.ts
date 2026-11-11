@@ -17,6 +17,20 @@ const groups: Record<string, readonly string[]> = {
   digital: ['electronics'],
 }
 
+const selectable = new Set<string>([
+  'electronics',
+  'jewelery',
+  'clothing',
+  "men's clothing",
+  "women's clothing",
+  'digital',
+])
+
+export function readCategoryParam(value: string | null) {
+  if (!value || !selectable.has(value)) return ''
+  return value
+}
+
 export function categoryMatches(productCategory: string, selected: string) {
   if (!selected) return true
   const group = groups[selected]

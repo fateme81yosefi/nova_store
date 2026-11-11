@@ -36,6 +36,8 @@ export function SearchBox({ placement = 'header' }: { placement?: 'header' | 'me
 
   return (
     <Form
+      method="get"
+      action="/"
       data-placement={placement}
       onSubmit={(event) => {
         event.preventDefault()
@@ -48,9 +50,10 @@ export function SearchBox({ placement = 'header' }: { placement?: 'header' | 'me
       <input
         dir={locale === 'fa' ? 'rtl' : 'ltr'}
         value={value}
+        maxLength={80}
         placeholder={t('search')}
         aria-label={t('search')}
-        onChange={(event) => setValue(event.target.value)}
+        onChange={(event) => setValue(event.target.value.slice(0, 80))}
       />
     </Form>
   )

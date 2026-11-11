@@ -6,6 +6,6 @@ export type NewsletterValues = {
 
 export function newsletterSchema(message: string) {
   return yup.object({
-    email: yup.string().trim().required(message).email(message),
+    email: yup.string().trim().max(254, message).required(message).email(message),
   })
 }

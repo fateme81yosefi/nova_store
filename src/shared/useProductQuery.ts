@@ -3,6 +3,7 @@
 import { useSearchParams } from 'next/navigation'
 import { useCallback } from 'react'
 import { usePathname, useRouter } from '@/i18n/navigation'
+import { readCategoryParam } from '@/utils/categoryKey'
 import { SortKey } from '@/types/enums/sort'
 
 export function useProductQuery() {
@@ -29,8 +30,8 @@ export function useProductQuery() {
   const parsedPage = Number(params.get('page') ?? '1')
 
   return {
-    q: params.get('q') ?? '',
-    category: params.get('category') ?? '',
+    q: (params.get('q') ?? '').replace(/[\u0000-\u001F\u007F]/g, '').trim().slice(0, 80),
+    category: readCategoryParam(params.get('category')),
     sort,
     page: Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1,
     update,

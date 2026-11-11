@@ -34,10 +34,14 @@ export function Newsletter() {
           onSubmit={() => setDone(true)}
         >
           {({ values, errors, touched, handleChange, handleBlur }) => (
-            <Form noValidate>
+            <Form noValidate method="post" action="#">
               <input
                 name="email"
                 type="email"
+                inputMode="email"
+                autoComplete="email"
+                maxLength={254}
+                spellCheck={false}
                 value={values.email}
                 placeholder={t('placeholder')}
                 aria-label={t('placeholder')}

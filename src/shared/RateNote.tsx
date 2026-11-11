@@ -3,6 +3,7 @@
 import { useLocale, useTranslations } from 'next-intl'
 import styled from 'styled-components'
 import { useUsdRate } from '@/context/ExchangeRate'
+import { safeExternalUrl } from '@/security/url'
 import { formatRate } from '@/utils/formatPrice'
 
 export function RateNote() {
@@ -11,14 +12,15 @@ export function RateNote() {
   const rate = useUsdRate()
   const amount = formatRate(rate.tomanPerDollar, locale)
   const time = rate.updatedAt ? formatUpdated(rate.updatedAt, locale) : ''
+  const source = rate.sourceUrl ? safeExternalUrl(rate.sourceUrl, ['nerkhara.com']) : null
 
   return (
     <Note>
       {t(rate.live ? 'rateNote' : 'rateFallback', { rate: amount, time })}
-      {rate.live && rate.sourceUrl ? (
+      {rate.live && source ? (
         <>
           {' '}
-          <Source href={rate.sourceUrl} target="_blank" rel="noreferrer">
+          <Source href={source} target="_blank" rel="noopener noreferrer">
             {t('rateSource')}
           </Source>
         </>

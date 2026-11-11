@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 import styled from 'styled-components'
 import { Link } from '@/i18n/navigation'
 import { Money } from '@/shared/Money'
+import { SafeImage } from '@/shared/SafeImage'
 import type { CartItem } from '@/types/cart'
 
 type CartLineProps = {
@@ -21,7 +22,7 @@ export function CartLine({ item, numberLocale, onIncrease, onDecrease, onRemove 
     <Row>
       <Cluster>
         <Thumb>
-          <img src={item.image} alt="" />
+          <SafeImage src={item.image} alt="" />
           <Remove type="button" aria-label={t('remove')} onClick={onRemove} />
         </Thumb>
         <Info>

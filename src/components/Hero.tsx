@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import styled from 'styled-components'
 import { PlusIcon } from '@/assets/Icons/glyphs'
+import { safeImageUrl } from '@/security/url'
 import { ThemeMode } from '@/types/enums/theme'
 
 const SLIDES = 3
@@ -25,9 +26,13 @@ export function Hero({ products }: { products: HeroProduct[] }) {
   const picks = useMemo(() => {
     const chosen = groups[slide]
       .map((category) => products.find((product) => product.category === category)?.image)
+      .map((src) => (src ? safeImageUrl(src) : null))
       .filter((src): src is string => Boolean(src))
     if (chosen.length > 0) return chosen
-    return products.slice(0, 3).map((product) => product.image)
+    return products.flatMap((product) => {
+      const src = safeImageUrl(product.image)
+      return src ? [src] : []
+    }).slice(0, 3)
   }, [products, slide])
 
   return (
