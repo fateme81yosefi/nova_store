@@ -3,9 +3,11 @@ import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server'
 import { Suspense, type ReactNode } from 'react'
+import { ExchangeRateProvider } from '@/context/ExchangeRate'
 import { AppThemeProvider } from '@/context/ThemeProvider'
 import { localeAlternates } from '@/i18n/alternates'
 import { routing, type AppLocale } from '@/i18n/routing'
+import { getUsdToToman } from '@/requests/exchangeRate'
 import { getCategories } from '@/requests/products'
 import { Footer } from '@/shared/Footer'
 import { Header } from '@/shared/Header'
@@ -50,6 +52,8 @@ export default async function LocaleLayout({ children, params }: Props) {
   setRequestLocale(locale)
   const messages = await getMessages()
 
+  const usdRate = await getUsdToToman()
+
   let categories: string[] = []
   try {
     categories = await getCategories()
@@ -63,11 +67,13 @@ export default async function LocaleLayout({ children, params }: Props) {
         <StyledRegistry>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <AppThemeProvider>
-              <Suspense fallback={<div className="header-fallback" />}>
-                <Header categories={categories} />
-              </Suspense>
-              {children}
-              <Footer />
+              <ExchangeRateProvider rate={usdRate}>
+                <Suspense fallback={<div className="header-fallback" />}>
+                  <Header categories={categories} />
+                </Suspense>
+                {children}
+                <Footer />
+              </ExchangeRateProvider>
             </AppThemeProvider>
           </NextIntlClientProvider>
         </StyledRegistry>

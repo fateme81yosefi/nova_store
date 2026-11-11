@@ -8,6 +8,18 @@ function readBaseUrl() {
   return value
 }
 
+type UnauthorizedHandler = () => void
+
+let onUnauthorized: UnauthorizedHandler | null = null
+
+export function setUnauthorizedHandler(handler: UnauthorizedHandler) {
+  onUnauthorized = handler
+}
+
+export function notifyUnauthorized() {
+  onUnauthorized?.()
+}
+
 export const api = axios.create({
   baseURL: readBaseUrl(),
   timeout: 15000,
@@ -18,6 +30,7 @@ api.interceptors.response.use(
   (response) => response,
   (error: unknown) => {
     if (axios.isAxiosError(error)) {
+      if (error.response?.status === 401) notifyUnauthorized()
       const data = error.response?.data
       const message = typeof data === 'string' && data.trim() ? data : error.message
       const failure = new Error(message) as Error & { status?: number }

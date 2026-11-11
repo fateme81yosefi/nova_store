@@ -7,6 +7,7 @@ import { ThemeMode } from '@/types/enums/theme'
 import { SortKey } from '@/types/enums/sort'
 import type { Product } from '@/types/product'
 import { filterProducts, PAGE_SIZE } from '@/utils/catalog'
+import { RateNote } from '@/shared/RateNote'
 import { useProductQuery } from '@/shared/useProductQuery'
 import { CategoryList } from './CategoryList'
 import { Hero } from './Hero'
@@ -41,10 +42,13 @@ export function Catalog({
       <CategoryList categories={categories} selected={category} onSelect={(value) => update({ category: value })} />
       <Section id="products">
         <Toolbar>
-          <Heading>
-            {t('title')}
-            <Mark aria-hidden="true" />
-          </Heading>
+          <TitleBlock>
+            <Heading>
+              {t('title')}
+              <Mark aria-hidden="true" />
+            </Heading>
+            <RateNote />
+          </TitleBlock>
           <SortSlot>
             <SortMenu
               label={t('sortLabel')}
@@ -101,6 +105,10 @@ export function Catalog({
 const Section = styled.section`
   margin-top: 18px;
   scroll-margin-top: 84px;
+`
+
+const TitleBlock = styled.div`
+  min-width: 0;
 `
 
 const Heading = styled.h2`

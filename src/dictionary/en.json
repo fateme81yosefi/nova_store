@@ -55,7 +55,10 @@
     "clothing": "Clothing"
   },
   "currency": {
-    "toman": "Toman"
+    "toman": "Toman",
+    "rateNote": "Prices use the Tehran free-market rate of {rate} toman per dollar. Last update {time}. Source",
+    "rateFallback": "The free-market rate was unavailable. Prices use {rate} toman per dollar.",
+    "rateSource": "NerkhAra"
   },
   "newsletter": {
     "title": "Stay in touch",

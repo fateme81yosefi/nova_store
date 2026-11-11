@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { CartIcon } from '@/assets/Icons/glyphs'
 import { Link } from '@/i18n/navigation'
 import { Money } from '@/shared/Money'
+import { RateNote } from '@/shared/RateNote'
 import { Rating } from '@/shared/Rating'
 import { useCart } from '@/storage/cartStore'
 import { ThemeMode } from '@/types/enums/theme'
@@ -42,6 +43,7 @@ export function ProductDetail({ product }: { product: Product }) {
           <Price>
             <Money usd={product.price} />
           </Price>
+          <RateNote />
           <h2>{t('product.description')}</h2>
           <Description>{product.description}</Description>
           <Actions>

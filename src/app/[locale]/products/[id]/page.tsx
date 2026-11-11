@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { ProductDetail } from '@/components/ProductDetail'
+import { ProductScreen } from '@/components/ProductScreen'
 import { localeAlternates } from '@/i18n/alternates'
 import { getProduct, getProducts } from '@/requests/products'
 import { Container, PageMain } from '@/shared/layout'
@@ -31,7 +31,13 @@ function preview(text: string) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, id } = await params
-  const product = await getProduct(id)
+  let product: Awaited<ReturnType<typeof getProduct>> = null
+  try {
+    product = await getProduct(id)
+  } catch {
+    const t = await getTranslations({ locale, namespace: 'nav' })
+    return { title: `${t('products')} | NOVA` }
+  }
   if (!product) {
     const t = await getTranslations({ locale, namespace: 'common' })
     return { title: t('notFound'), robots: { index: false, follow: false } }
@@ -60,13 +66,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProductPage({ params }: Props) {
   const { locale, id } = await params
   setRequestLocale(locale)
-  const product = await getProduct(id)
-  if (!product) notFound()
+  let product: Awaited<ReturnType<typeof getProduct>> = null
+  let blocked = false
+  try {
+    product = await getProduct(id)
+  } catch {
+    blocked = true
+  }
+  if (!product && !blocked) notFound()
 
   return (
     <PageMain>
       <Container>
-        <ProductDetail product={product} />
+        <ProductScreen id={id} product={product} blocked={blocked} />
       </Container>
     </PageMain>
   )

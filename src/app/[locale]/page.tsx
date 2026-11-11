@@ -1,6 +1,6 @@
 import { setRequestLocale } from 'next-intl/server'
 import { Suspense } from 'react'
-import { Catalog } from '@/components/Catalog'
+import { Storefront } from '@/components/Storefront'
 import { loadStorefront } from '@/requests/products'
 import { Container, PageMain } from '@/shared/layout'
 
@@ -19,7 +19,7 @@ export default async function HomePage({ params }: Props) {
     <PageMain>
       <Container>
         <Suspense>
-          <Catalog products={data.products} categories={data.categories} failed={data.failed} />
+          <Storefront initial={data} />
         </Suspense>
       </Container>
     </PageMain>
